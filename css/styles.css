@@ -195,7 +195,7 @@ button {
   gap: 6px;
 }
 
-/* ── Concrete navbar: 4rem, wordmark left, below status ── */
+/* ── Navbar: 4rem, stube.li left, Powered by Concrete right ── */
 
 .navbar {
   height: var(--navbar-height);
@@ -203,6 +203,7 @@ button {
   flex-shrink: 0;
   display: flex;
   align-items: center;
+  justify-content: space-between;
   padding: 0 20px;
   background: var(--white-pure);
   border-bottom: 1px solid var(--border-color);
@@ -214,15 +215,44 @@ button {
 .navbar-brand {
   display: flex;
   align-items: center;
+  gap: 8px;
   height: 100%;
   text-decoration: none;
+  color: inherit;
 }
 
 .navbar-logo {
   display: block;
-  height: 22px;
+  height: 26px;
   width: auto;
-  max-width: 168px;
+}
+
+.navbar-brand-text {
+  font-family: var(--font);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--black-pure);
+}
+
+.navbar-powered {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.navbar-powered-label {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--grey-medium);
+  white-space: nowrap;
+}
+
+.navbar-powered-logo {
+  display: block;
+  height: 16px;
+  width: auto;
+  max-width: 128px;
 }
 
 /* ── Canvas ── */
