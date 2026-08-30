@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Stube</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <div class="stage">
+    <div class="phone" id="phone">
+      <div class="island" aria-hidden="true"></div>
+
+      <div class="status-bar">
+        <span class="status-time">9:41</span>
+        <span class="status-icons" aria-hidden="true">
+          <svg viewBox="0 0 17 12" width="17" height="12"><rect x="0" y="7" width="3" height="5" rx="0.4" fill="currentColor"/><rect x="4.5" y="5" width="3" height="7" rx="0.4" fill="currentColor"/><rect x="9" y="2.5" width="3" height="9.5" rx="0.4" fill="currentColor"/><rect x="13.5" y="0" width="3" height="12" rx="0.4" fill="currentColor" opacity="0.35"/></svg>
+          <svg viewBox="0 0 16 12" width="16" height="12"><path d="M8.1 2.4c2.1 0 4.1.8 5.6 2.2l-1.1 1.1A6.3 6.3 0 0 0 8.1 4.1c-1.6 0-3.1.6-4.3 1.6L2.7 4.6A7.9 7.9 0 0 1 8.1 2.4Zm0 3.2c1.3 0 2.5.5 3.4 1.4L10.3 8A3.2 3.2 0 0 0 8.1 7.2c-.8 0-1.6.3-2.2.8L4.7 7C5.6 6.1 6.8 5.6 8.1 5.6Zm0 3.2c.5 0 1 .2 1.3.6L8.1 11 6.8 9.4c.4-.4.8-.6 1.3-.6Z" fill="currentColor"/></svg>
+          <svg viewBox="0 0 25 12" width="25" height="12"><rect x="0.5" y="1" width="21" height="10" rx="2.2" fill="none" stroke="currentColor" stroke-width="1"/><rect x="2" y="2.6" width="16.5" height="6.8" rx="1.1" fill="currentColor"/><rect x="22.2" y="4" width="1.6" height="4" rx="0.6" fill="currentColor"/></svg>
+        </span>
+      </div>
+
+      <header class="navbar" role="banner">
+        <a class="navbar-brand" href="#dashboard" data-nav="dashboard" aria-label="Concrete">
+          <img class="navbar-logo" src="assets/logo-text-on-light.svg" alt="CONCRETE" />
+        </a>
+      </header>
+
+      <main class="canvas" id="screen"></main>
+      <div class="sheet-host" id="sheetHost"></div>
+      <div class="detail-host" id="detailHost"></div>
+      <div class="toast" id="toast" hidden></div>
+
+      <nav class="dock" aria-label="Hauptnavigation">
+        <button type="button" class="nav-item" data-nav="dashboard">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.75"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+          <span>Dashboard</span>
+        </button>
+        <button type="button" class="nav-item" data-nav="todos">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.75"><rect x="5" y="3" width="14" height="18" rx="1"/><path d="M9 8h6M9 12h6M9 16h4"/><path d="M8 3v2M16 3v2"/></svg>
+          <span>Aufgaben</span>
+        </button>
+        <button type="button" class="nav-create" data-action="open-create">
+          <span class="nav-create-plus" aria-hidden="true">+</span>
+          Erstellen
+        </button>
+        <button type="button" class="nav-item" data-nav="portfolio">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M4 20V9l8-5 8 5v11"/><path d="M10 20v-6h4v6"/></svg>
+          <span>Portfolio</span>
+        </button>
+        <button type="button" class="nav-item" data-nav="profile">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.75"><circle cx="12" cy="8" r="3.2"/><path d="M5 19c1.4-3.2 4-5 7-5s5.6 1.8 7 5"/></svg>
+          <span>Profil</span>
+        </button>
+      </nav>
+    </div>
+  </div>
+  <script src="js/app.js"></script>
+</body>
+</html>
