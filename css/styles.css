@@ -18,7 +18,7 @@ html.is-static *::after {
 }
 
 :root {
-  --accent-blue: #4169e1;
+  --accent-blue: #2d5f4f;
   --white-pure: #ffffff;
   --black-pure: #000000;
   --grey-light: #e0e0e0;
@@ -33,7 +33,7 @@ html.is-static *::after {
   --danger-soft: rgba(214, 69, 69, 0.12);
   --warn: #d9822b;
   --warn-soft: #fff4e6;
-  --blue-soft: rgba(65, 105, 225, 0.12);
+  --blue-soft: rgba(45, 95, 79, 0.12);
   --canvas: #fafafa;
   --font: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }

@@ -80,7 +80,7 @@ const TICKETS = [
     cat: "dringend",
     iconKey: "alert",
     statusLabel: "In Prüfung",
-    statusDot: "#4169E1",
+    statusDot: "#2D5F4F",
     group: "main",
     prio: "urgent",
     created: "04.03.2026",
@@ -160,7 +160,7 @@ const TICKETS = [
     cat: "bearbeitung",
     iconKey: "clock",
     statusLabel: "Handwerker beauftragt",
-    statusDot: "#4169E1",
+    statusDot: "#2D5F4F",
     group: "processing",
     prio: "normal",
     created: "27.02.2026",
@@ -193,7 +193,7 @@ const PROPERTIES = [
     ],
     contacts: [
       { name: "Laura Keller", role: "Mieterin", initials: "LK", color: "#111418" },
-      { name: "Sanitär Müller AG", role: "Handwerker", initials: "SM", color: "#4169E1" },
+      { name: "Sanitär Müller AG", role: "Handwerker", initials: "SM", color: "#2D5F4F" },
       { name: "Hauswartung Luzern", role: "Hauswart", initials: "HL", color: "#5A5A5A" },
     ],
   },
@@ -213,7 +213,7 @@ const PROPERTIES = [
     ],
     contacts: [
       { name: "Thomas Burri", role: "Mieter", initials: "TB", color: "#111418" },
-      { name: "Elektro Steiner", role: "Handwerker", initials: "ES", color: "#4169E1" },
+      { name: "Elektro Steiner", role: "Handwerker", initials: "ES", color: "#2D5F4F" },
     ],
   },
   {
@@ -234,7 +234,7 @@ const PROPERTIES = [
     ],
     contacts: [
       { name: "Franziska Huber", role: "Mieterin", initials: "FH", color: "#111418" },
-      { name: "Sanitär Müller AG", role: "Handwerker", initials: "SM", color: "#4169E1" },
+      { name: "Sanitär Müller AG", role: "Handwerker", initials: "SM", color: "#2D5F4F" },
     ],
   },
 ];
@@ -244,9 +244,9 @@ const STATUS_FLOW = ["Neu", "In Prüfung", "Beauftragt", "Termin", "Repariert", 
 const CREATE_KINDS = {
   task: { accent: "#000000", tint: "rgba(0,0,0,0.08)", title: "Aufgabe erstellen" },
   damage: { accent: "#D64545", tint: "rgba(214,69,69,0.12)", title: "Schaden melden" },
-  message: { accent: "#4169E1", tint: "rgba(65,105,225,0.12)", title: "Nachricht senden" },
+  message: { accent: "#2D5F4F", tint: "rgba(45,95,79,0.12)", title: "Nachricht senden" },
   invoice: { accent: "#D9822B", tint: "rgba(217,130,43,0.12)", title: "Rechnung erfassen" },
-  document: { accent: "#4169E1", tint: "rgba(65,105,225,0.12)", title: "Dokument hochladen" },
+  document: { accent: "#2D5F4F", tint: "rgba(45,95,79,0.12)", title: "Dokument hochladen" },
   property: { accent: "#000000", tint: "rgba(0,0,0,0.08)", title: "Liegenschaft hinzufügen" },
 };
 
@@ -532,13 +532,13 @@ function dashboardHTML() {
           <svg class="spark" width="100%" height="56" viewBox="0 0 280 56" preserveAspectRatio="none">
             <defs>
               <linearGradient id="sg" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0" stop-color="#4169E1" stop-opacity=".22"></stop>
-                <stop offset="1" stop-color="#4169E1" stop-opacity="0"></stop>
+                <stop offset="0" stop-color="#2D5F4F" stop-opacity=".22"></stop>
+                <stop offset="1" stop-color="#2D5F4F" stop-opacity="0"></stop>
               </linearGradient>
             </defs>
             <path d="M0,9 L56,9 L112,32 L168,9 L224,9 L280,48 L280,56 L0,56 Z" fill="url(#sg)" style="animation:fadeIn .6s .5s both"></path>
-            <path d="M0,9 L56,9 L112,32 L168,9 L224,9 L280,48" fill="none" stroke="#4169E1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="640" stroke-dashoffset="640" style="animation:draw 1.1s .25s ease forwards"></path>
-            <circle cx="280" cy="48" r="3" fill="#4169E1" style="animation:popIn .4s 1.15s both"></circle>
+            <path d="M0,9 L56,9 L112,32 L168,9 L224,9 L280,48" fill="none" stroke="#2D5F4F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="640" stroke-dashoffset="640" style="animation:draw 1.1s .25s ease forwards"></path>
+            <circle cx="280" cy="48" r="3" fill="#2D5F4F" style="animation:popIn .4s 1.15s both"></circle>
           </svg>
           <div class="spark-labels"><span>Okt</span><span>Nov</span><span>Dez</span><span>Jan</span><span>Feb</span><span>Mrz</span></div>
           <div class="split">
@@ -866,7 +866,7 @@ function ticketDetailHTML(id) {
     .map(
       (e, i, arr) => `
       <div class="tl-item">
-        <div class="tl-rail"><b style="background:#4169E1"></b>${i < arr.length - 1 ? "<i></i>" : "<i></i>"}</div>
+        <div class="tl-rail"><b style="background:#2D5F4F"></b>${i < arr.length - 1 ? "<i></i>" : "<i></i>"}</div>
         <div><p>${e.label}</p><span>${e.date}</span></div>
       </div>`
     )
@@ -968,7 +968,7 @@ function propertyDetailHTML(id) {
         </div>
         <div class="unit__right">
           <strong>${fmtCHF(u.rent)}</strong>
-          <div class="unit__st"><i style="background:${u.st === "occupied" ? "#4169E1" : "#e0e0e0"}"></i>${u.st === "occupied" ? "Belegt" : "Leer"}</div>
+          <div class="unit__st"><i style="background:${u.st === "occupied" ? "#2D5F4F" : "#e0e0e0"}"></i>${u.st === "occupied" ? "Belegt" : "Leer"}</div>
         </div>
       </div>`
     )
