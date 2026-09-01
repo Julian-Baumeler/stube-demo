@@ -10,7 +10,7 @@
   <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;family=IBM+Plex+Mono:wght@600&amp;display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; }
     html, body { margin: 0; padding: 0; }
@@ -27,7 +27,7 @@
     }
     .card {
       width: 100%;
-      max-width: 420px;
+      max-width: 480px;
       background: #fff;
       border: 1px solid rgba(0, 0, 0, 0.1);
       border-radius: 12px;
@@ -91,14 +91,141 @@
       white-space: nowrap;
     }
     .copy:hover { filter: brightness(1.08); }
-    .copy.is-done { background: #163326; }
+    .copy.is-done { background: #163326; cursor: default; }
     .status {
       margin: 0;
       font-size: 13px;
       color: #666;
       min-height: 1.3em;
     }
-    .status a { color: #163326; font-weight: 600; }
+
+    .hint {
+      display: none;
+      margin-top: 22px;
+    }
+    .hint.is-on {
+      display: block;
+      animation: riseIn 0.45s ease-out;
+    }
+    .hint-caption {
+      margin: 12px 0 0;
+      font-size: 14px;
+      line-height: 1.45;
+      color: #163326;
+      font-weight: 600;
+    }
+    .hint-caption span { color: #2d5f4f; }
+
+    .mock {
+      position: relative;
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      border-radius: 10px;
+      overflow: visible;
+      background: #fff;
+    }
+    .mock-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 14px 16px;
+      border-bottom: 1px solid #e5e7eb;
+    }
+    .mock-brand {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      min-width: 0;
+    }
+    .mock-brand img { height: 24px; width: auto; display: block; }
+    .mock-brand-text {
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      color: #163326;
+    }
+    .mock-brand-text .dot { color: #2d5f4f; }
+    .mock-login-wrap {
+      position: relative;
+      flex-shrink: 0;
+    }
+    .mock-login {
+      position: relative;
+      z-index: 2;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 8px;
+      border-radius: 6px;
+      font-family: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #4b5563;
+      background: #fff;
+    }
+    .pulse {
+      position: absolute;
+      inset: -7px;
+      border-radius: 10px;
+      border: 2px solid #2d5f4f;
+      z-index: 1;
+      animation: pulseRing 1.5s ease-out infinite;
+    }
+    .arrow {
+      position: absolute;
+      right: 10px;
+      top: calc(100% + 2px);
+      width: 86px;
+      height: 72px;
+      pointer-events: none;
+      z-index: 3;
+      animation: bounceArrow 0.9s ease-in-out infinite;
+    }
+    .cursor {
+      position: absolute;
+      right: -6px;
+      top: 22px;
+      width: 22px;
+      height: 22px;
+      z-index: 4;
+      pointer-events: none;
+      opacity: 0;
+      animation: cursorIn 1.15s 0.25s ease-out forwards;
+    }
+    .mock-body {
+      height: 96px;
+      background: #fafafa;
+      border-radius: 0 0 10px 10px;
+    }
+
+    @keyframes riseIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: none; }
+    }
+    @keyframes pulseRing {
+      0% { transform: scale(0.92); opacity: 0.7; }
+      70% { transform: scale(1.18); opacity: 0; }
+      100% { transform: scale(1.18); opacity: 0; }
+    }
+    @keyframes bounceArrow {
+      0%, 100% { transform: translate(0, 0); }
+      50% { transform: translate(5px, -7px); }
+    }
+    @keyframes cursorIn {
+      0% { opacity: 0; transform: translate(-48px, 36px); }
+      18% { opacity: 1; }
+      72% { transform: translate(0, 0); }
+      82% { transform: translate(0, 0) scale(0.88); }
+      100% { opacity: 1; transform: translate(0, 0) scale(1); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .hint.is-on, .pulse, .arrow, .cursor { animation: none; }
+      .hint.is-on { opacity: 1; }
+      .cursor { opacity: 1; }
+    }
   </style>
 </head>
 <body>
@@ -108,20 +235,51 @@
       <span>stube.li</span>
     </a>
     <h1>Zugangscode</h1>
-    <p class="lead">Kopiere den Code und gib ihn auf stube.li ein, um die interne Vorschau zu öffnen.</p>
+    <p class="lead">Kopiere den Code. Danach zeigen wir dir, wo du ihn auf stube.li eingibst.</p>
     <div class="code-box">
       <span class="code" id="code">02111965</span>
       <button class="copy" type="button" id="copy">Kopieren</button>
     </div>
-    <p class="status" id="status">Weiter zu stube.li in <span id="secs">4</span>s…</p>
+    <p class="status" id="status">Zuerst den Code kopieren.</p>
+
+    <div class="hint" id="hint">
+      <div class="mock" aria-hidden="true">
+        <div class="mock-header">
+          <div class="mock-brand">
+            <img src="/assets/stube-li-logo.svg" alt="" />
+            <span class="mock-brand-text">stube<span class="dot">.</span></span>
+          </div>
+          <div class="mock-login-wrap">
+            <span class="pulse"></span>
+            <div class="mock-login">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M2.586 17.414A2 2 0 0 0 2 18.828V21a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h1a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h.172a2 2 0 0 0 1.414-.586l.814-.814a6.5 6.5 0 1 0-4-4z" />
+                <circle cx="16.5" cy="7.5" r=".5" fill="currentColor" />
+              </svg>
+              Login mit Passwort
+            </div>
+            <svg class="cursor" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M4 2.5 19 14.2l-6.1.4 3.4 7.4-2.6 1.2-3.5-7.5L4 19.8Z" fill="#111" stroke="#fff" stroke-width="1.2" stroke-linejoin="round" />
+            </svg>
+            <svg class="arrow" viewBox="0 0 86 72" fill="none" aria-hidden="true">
+              <path d="M16 64c16-1 38-10 54-40" stroke="#2d5f4f" stroke-width="2.5" stroke-linecap="round" />
+              <path d="M54 32l18-10-2-16" stroke="#2d5f4f" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </div>
+        </div>
+        <div class="mock-body"></div>
+      </div>
+      <p class="hint-caption">Oben rechts auf stube.li: <span>Login mit Passwort</span></p>
+    </div>
   </main>
   <script>
     const CODE = "02111965";
     const DEST = "https://www.stube.li/";
+    const DELAY = 6;
     const copyBtn = document.getElementById("copy");
     const statusEl = document.getElementById("status");
-    const secsEl = document.getElementById("secs");
-    let remaining = 4;
+    const hintEl = document.getElementById("hint");
+    let remaining = DELAY;
     let timer;
 
     async function copyCode() {
@@ -150,26 +308,33 @@
       window.location.href = DEST;
     }
 
-    copyBtn.addEventListener("click", async () => {
-      const ok = await copyCode();
-      copyBtn.textContent = ok ? "Kopiert" : "Kopieren";
-      copyBtn.classList.toggle("is-done", ok);
-      if (ok) {
-        clearInterval(timer);
-        statusEl.textContent = "Weiter zu stube.li…";
-        setTimeout(go, 600);
-      }
-    });
+    function startCountdown() {
+      remaining = DELAY;
+      statusEl.innerHTML = "Weiter zu stube.li in <span id=\"secs\">" + remaining + "</span>s…";
+      const secsEl = document.getElementById("secs");
+      timer = setInterval(() => {
+        remaining -= 1;
+        if (remaining <= 0) {
+          clearInterval(timer);
+          go();
+          return;
+        }
+        secsEl.textContent = String(remaining);
+      }, 1000);
+    }
 
-    timer = setInterval(() => {
-      remaining -= 1;
-      if (remaining <= 0) {
-        clearInterval(timer);
-        go();
+    copyBtn.addEventListener("click", async () => {
+      if (copyBtn.classList.contains("is-done")) return;
+      const ok = await copyCode();
+      if (!ok) {
+        statusEl.textContent = "Kopieren hat nicht geklappt. Bitte nochmals versuchen.";
         return;
       }
-      secsEl.textContent = String(remaining);
-    }, 1000);
+      copyBtn.textContent = "Kopiert";
+      copyBtn.classList.add("is-done");
+      hintEl.classList.add("is-on");
+      startCountdown();
+    });
   </script>
 </body>
 </html>
