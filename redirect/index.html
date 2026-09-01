@@ -459,10 +459,10 @@
       <span>stube.li</span>
     </a>
     <h1>Zugangscode</h1>
-    <p class="lead">Kopiere den Code. Danach zeigen wir dir, wo du ihn auf stube.li eingibst.</p>
+    <p class="lead">Kopiere den Zugangscode. Danach zeigen wir dir, wo du ihn auf stube.li einfügst.</p>
     <div class="code-box">
       <span class="code" id="code">02111965</span>
-      <button class="copy" type="button" id="copy">Kopieren</button>
+      <button class="copy" type="button" id="copy">Code kopieren</button>
     </div>
     <p class="status" id="status">Zuerst den Code kopieren.</p>
 
@@ -540,16 +540,11 @@
   <script>
     const CODE = "02111965";
     const DEST = "https://www.stube.li/";
-    const DELAY = 12;
-    const params = new URLSearchParams(location.search);
-    const preview = params.has("preview");
-    const freeze = params.get("freeze");
     const copyBtn = document.getElementById("copy");
     const goBtn = document.getElementById("go");
     const statusEl = document.getElementById("status");
     const hintEl = document.getElementById("hint");
-    let remaining = DELAY;
-    let timer;
+    let copied = false;
 
     async function copyCode() {
       try {
@@ -573,56 +568,25 @@
       }
     }
 
-    function go() {
-      window.location.href = DEST;
-    }
-
-    function showHint() {
-      copyBtn.textContent = "Kopiert";
-      copyBtn.classList.add("is-done");
-      hintEl.classList.add("is-on");
-    }
-
-    function startCountdown() {
-      remaining = DELAY;
-      statusEl.innerHTML = "Weiter zu stube.li in <span id=\"secs\">" + remaining + "</span>s…";
-      const secsEl = document.getElementById("secs");
-      timer = setInterval(() => {
-        remaining -= 1;
-        if (remaining <= 0) {
-          clearInterval(timer);
-          go();
-          return;
-        }
-        secsEl.textContent = String(remaining);
-      }, 1000);
-    }
-
     copyBtn.addEventListener("click", async () => {
-      if (copyBtn.classList.contains("is-done")) return;
+      if (copied) return;
       const ok = await copyCode();
       if (!ok) {
         statusEl.textContent = "Kopieren hat nicht geklappt. Bitte nochmals versuchen.";
         return;
       }
-      showHint();
-      startCountdown();
+      copied = true;
+      copyBtn.textContent = "Kopiert";
+      copyBtn.classList.add("is-done");
+      statusEl.textContent = "Code ist in der Zwischenablage. Als Nächstes auf stube.li einfügen.";
+      hintEl.classList.add("is-on");
     });
 
     goBtn.addEventListener("click", async () => {
-      if (timer) clearInterval(timer);
+      if (!copied) return;
       await copyCode();
-      go();
+      window.location.href = DEST;
     });
-
-    if (preview || freeze) {
-      showHint();
-      if (freeze === "paste") hintEl.classList.add("freeze-paste");
-      if (freeze === "login") hintEl.classList.add("freeze-login");
-      statusEl.textContent = freeze
-        ? "Vorschau (pausiert)."
-        : "Vorschau der Animation — kein Redirect.";
-    }
   </script>
 </body>
 </html>
