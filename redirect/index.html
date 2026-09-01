@@ -92,6 +92,25 @@
     }
     .copy:hover { filter: brightness(1.08); }
     .copy.is-done { background: #163326; cursor: default; }
+    .go {
+      appearance: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      min-height: 48px;
+      margin-top: 16px;
+      border: 0;
+      border-radius: 8px;
+      background: #163326;
+      color: #fff;
+      font-family: inherit;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      text-decoration: none;
+    }
+    .go:hover { filter: brightness(1.08); }
     .status {
       margin: 0;
       font-size: 13px;
@@ -515,6 +534,7 @@
         <span class="cap cap-a">Oben rechts: <em>Login mit Passwort</em></span>
         <span class="cap cap-b">Code einfügen, dann <em>Vorschau öffnen</em></span>
       </p>
+      <button class="go" type="button" id="go">Weiter zu stube.li</button>
     </div>
   </main>
   <script>
@@ -525,6 +545,7 @@
     const preview = params.has("preview");
     const freeze = params.get("freeze");
     const copyBtn = document.getElementById("copy");
+    const goBtn = document.getElementById("go");
     const statusEl = document.getElementById("status");
     const hintEl = document.getElementById("hint");
     let remaining = DELAY;
@@ -586,6 +607,12 @@
       }
       showHint();
       startCountdown();
+    });
+
+    goBtn.addEventListener("click", async () => {
+      if (timer) clearInterval(timer);
+      await copyCode();
+      go();
     });
 
     if (preview || freeze) {
