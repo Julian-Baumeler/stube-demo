@@ -99,205 +99,337 @@
       min-height: 1.3em;
     }
 
-    .hint {
-      display: none;
-      margin-top: 20px;
-    }
-    .hint.is-on {
-      display: block;
-      animation: riseIn 0.45s ease-out;
-    }
+    .hint { display: none; margin-top: 20px; }
+    .hint.is-on { display: block; animation: riseIn 0.45s ease-out; }
     .hint-caption {
+      position: relative;
       margin: 12px 0 0;
+      min-height: 1.45em;
       font-size: 14px;
       line-height: 1.45;
       color: #163326;
       font-weight: 600;
     }
-    .hint-caption span { color: #2d5f4f; }
+    .hint-caption em { font-style: normal; color: #2d5f4f; }
+    .cap {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+    }
+    .cap-a { animation: capA var(--loop) ease infinite; }
+    .cap-b { opacity: 0; animation: capB var(--loop) ease infinite; }
 
     .scene {
-      background: linear-gradient(165deg, #8fb3ce 0%, #c9b8ae 48%, #edcbb8 100%);
+      --loop: 12s;
+      background: linear-gradient(168deg, #92afc9 0%, #c4b3a7 52%, #e9c9ae 100%);
       border-radius: 14px;
-      padding: 22px 18px 16px;
+      padding: 20px 20px 18px;
     }
     .browser {
       background: #f4f4f5;
       border-radius: 12px;
-      box-shadow: 0 18px 40px rgba(20, 30, 40, 0.18);
-      overflow: visible;
+      box-shadow: 0 16px 36px rgba(22, 32, 44, 0.22), 0 2px 8px rgba(22, 32, 44, 0.1);
+      overflow: hidden;
     }
     .chrome {
+      position: relative;
       display: flex;
       align-items: center;
       gap: 6px;
-      padding: 10px 14px 8px;
+      padding: 11px 14px;
     }
     .chrome i {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: #d4d4d8;
-      display: block;
+      width: 8px; height: 8px; border-radius: 50%; background: #d4d4d8; display: block;
     }
     .chrome i:nth-child(1) { background: #ff5f57; }
     .chrome i:nth-child(2) { background: #febc2e; }
     .chrome i:nth-child(3) { background: #28c840; }
+    .chrome-url {
+      position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
+      width: 36%; height: 9px; border-radius: 99px; background: #e6e6e9;
+    }
 
-    .page {
-      background: #fff;
-      border-radius: 0 0 12px 12px;
-      overflow: visible;
-    }
+    .page { position: relative; background: #fff; }
     .page-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      padding: 12px 16px 44px;
-      border-bottom: 1px solid #ececee;
+      position: relative; z-index: 2;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; padding: 13px 16px; border-bottom: 1px solid #ececee;
     }
-    .page-brand {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .page-brand img { height: 22px; width: auto; display: block; }
+    .page-brand { display: flex; align-items: center; gap: 7px; }
+    .page-brand img { height: 20px; width: auto; display: block; }
     .page-brand-text {
-      font-size: 16px;
-      font-weight: 700;
-      letter-spacing: -0.03em;
-      color: #163326;
+      font-size: 15px; font-weight: 700; letter-spacing: -0.03em; color: #163326;
     }
     .page-brand-text .dot { color: #2d5f4f; }
 
-    .target {
-      position: relative;
-      flex-shrink: 0;
-      z-index: 2;
-    }
+    .target { position: relative; flex-shrink: 0; }
     .login {
-      position: relative;
-      z-index: 2;
-      display: inline-flex;
-      align-items: center;
-      gap: 7px;
-      padding: 7px 12px;
-      border-radius: 999px;
-      background: #fff;
-      border: 2.5px solid #1a1a1a;
-      box-shadow: 0 0 0 0 rgba(26, 26, 26, 0.18);
+      position: relative; z-index: 1;
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 6px 11px; border-radius: 999px;
+      background: #fff; border: 1px solid #e4e4e7;
       font-family: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
-      font-size: 10px;
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: #111;
-      animation: targetPulse 1.6s ease-in-out infinite;
+      font-size: 10px; font-weight: 500; letter-spacing: 0.1em;
+      text-transform: uppercase; color: #71717a;
+      animation: loginPress var(--loop) ease infinite;
     }
-    .you {
-      position: absolute;
-      top: calc(100% + 10px);
-      right: 2px;
-      display: flex;
-      align-items: flex-start;
-      gap: 6px;
-      z-index: 3;
-      animation: youPop 0.55s 0.15s cubic-bezier(0.2, 1.2, 0.3, 1) both;
+    .ring {
+      position: absolute; inset: -5px;
+      border: 2px solid #18181b; border-radius: 999px;
+      box-shadow: 0 6px 16px rgba(24, 24, 27, 0.15);
+      opacity: 0; pointer-events: none;
+      animation: ringLife var(--loop) ease infinite;
+    }
+    .you-login {
+      position: absolute; top: calc(100% + 7px); right: 8px; z-index: 3;
+      display: flex; flex-direction: column; align-items: flex-end;
+      transform-origin: 80% 0;
+      opacity: 0; animation: youLogin var(--loop) ease infinite;
+    }
+    .you-paste {
+      position: absolute; top: 116px; right: 10px; z-index: 8;
+      display: flex; flex-direction: column; align-items: flex-end;
+      opacity: 0; animation: youPaste var(--loop) ease infinite;
     }
     .you-caret {
-      width: 0;
-      height: 0;
-      margin-top: -10px;
-      border-left: 6px solid transparent;
-      border-right: 6px solid transparent;
-      border-bottom: 8px solid #6b7280;
-      filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.08));
+      width: 0; height: 0; margin-bottom: -1px;
+      border-left: 6px solid transparent; border-right: 6px solid transparent;
+      border-bottom: 7px solid #18181b;
     }
-    .you-label {
-      background: #6b7280;
-      color: #fff;
-      font-size: 12px;
-      font-weight: 600;
-      letter-spacing: 0.01em;
-      padding: 3px 10px 4px;
-      border-radius: 8px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
-      animation: youBob 1.4s 0.7s ease-in-out infinite;
+    .you-login .you-caret { margin-right: 12px; }
+    .you-paste .you-caret { margin-right: 16px; }
+    .you-chip {
+      background: #18181b; color: #fff;
+      font-size: 11.5px; font-weight: 600; letter-spacing: 0.01em; line-height: 1;
+      padding: 5px 10px 6px; border-radius: 7px;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.18);
     }
 
     .ghost {
-      padding: 22px 20px 20px;
-      display: flex;
-      justify-content: center;
+      padding: 30px 18px 34px; display: flex; justify-content: center;
     }
     .ghost-card {
-      width: 70%;
-      max-width: 280px;
-      border: 1px solid #ececee;
-      border-radius: 10px;
-      padding: 16px;
-      background: #fff;
+      width: 82%; max-width: 300px;
+      border: 1px solid #ededf0; border-radius: 12px;
+      padding: 22px 20px 20px; background: #fff;
+      display: flex; flex-direction: column; align-items: center;
     }
-    .ghost-kicker {
-      width: 42%;
-      height: 6px;
-      border-radius: 99px;
-      background: #e8e8ea;
-      margin-bottom: 12px;
+    .ghost-kicker { width: 34%; height: 6px; border-radius: 99px; background: #dbe7e0; margin-bottom: 12px; }
+    .ghost-title { width: 84%; height: 11px; border-radius: 99px; background: #e4e4e7; margin-bottom: 7px; }
+    .ghost-title.short { width: 58%; margin-bottom: 14px; }
+    .ghost-line { width: 92%; height: 6px; border-radius: 99px; background: #f2f2f4; margin-bottom: 6px; }
+    .ghost-line.short { width: 70%; }
+    .ghost-row { display: flex; gap: 8px; margin-top: 16px; width: 100%; }
+    .ghost-input { flex: 1; height: 26px; border-radius: 8px; background: #f6f6f8; border: 1px solid #ececef; }
+    .ghost-btn { width: 76px; height: 26px; border-radius: 8px; background: #d3e3da; }
+
+    .modal-layer {
+      position: absolute; inset: 0; z-index: 6;
+      display: flex; align-items: center; justify-content: center;
+      padding: 18px 16px 16px;
+      background: rgba(0, 0, 0, 0.45);
+      backdrop-filter: blur(3px);
+      opacity: 0; pointer-events: none;
+      animation: modalIn var(--loop) ease infinite;
     }
-    .ghost-title {
-      width: 78%;
-      height: 10px;
-      border-radius: 99px;
-      background: #e4e4e7;
-      margin-bottom: 8px;
+    .modal {
+      position: relative;
+      width: 100%; max-width: 260px;
+      background: #fff; border: 1px solid #e5e7eb;
+      padding: 18px 16px 16px;
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.18);
+      text-align: left;
+      transform: translateY(8px) scale(0.96);
+      animation: modalCard var(--loop) ease infinite;
     }
-    .ghost-line {
-      height: 6px;
-      border-radius: 99px;
-      background: #f0f0f2;
-      margin-bottom: 6px;
+    .modal-x {
+      position: absolute; top: 8px; right: 8px;
+      width: 16px; height: 16px; color: #c4c4c4;
     }
-    .ghost-line.short { width: 62%; }
-    .ghost-row {
-      display: flex;
-      gap: 8px;
-      margin-top: 14px;
+    .modal-kicker {
+      font-family: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+      font-size: 8px; letter-spacing: 0.16em; text-transform: uppercase;
+      font-weight: 600; color: #789688; display: block; margin-bottom: 4px;
     }
-    .ghost-input {
-      flex: 1;
-      height: 22px;
-      border-radius: 6px;
-      background: #f4f4f5;
+    .modal-title {
+      margin: 0 0 4px; font-size: 15px; font-weight: 800;
+      letter-spacing: -0.02em; color: #163326;
     }
-    .ghost-btn {
-      width: 72px;
-      height: 22px;
-      border-radius: 6px;
-      background: #d7e3dd;
+    .modal-lead {
+      margin: 0 0 12px; font-size: 10px; line-height: 1.4; color: #6b7280;
+    }
+    .modal-label {
+      display: block; margin-bottom: 5px;
+      font-family: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+      font-size: 8px; letter-spacing: 0.12em; text-transform: uppercase;
+      font-weight: 600; color: #374151;
+    }
+    .modal-input {
+      position: relative;
+      height: 32px; display: flex; align-items: center;
+      padding: 0 10px; margin-bottom: 10px;
+      border: 1px solid #d1d5db; background: #fff;
+      animation: inputFocus var(--loop) ease infinite;
+    }
+    .digits {
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 13px; font-weight: 700; letter-spacing: 0.18em;
+      color: #163326; white-space: nowrap; overflow: hidden;
+      max-width: 0; animation: typeCode var(--loop) steps(8, end) infinite;
+    }
+    .blink {
+      width: 1px; height: 14px; margin-left: 1px; background: #163326;
+      opacity: 0; animation: caretBlink var(--loop) step-end infinite;
+    }
+    .modal-submit {
+      width: 100%; height: 30px;
+      display: flex; align-items: center; justify-content: center;
+      background: #163326; color: #fff;
+      font-size: 9px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+      animation: submitPress var(--loop) ease infinite;
+    }
+
+    .cursor {
+      position: absolute; z-index: 12;
+      width: 20px; height: 20px; pointer-events: none;
+      filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.28));
+      transform-origin: 16% 16%; opacity: 0;
+      animation: cursorTravel var(--loop) ease infinite;
     }
 
     @keyframes riseIn {
       from { opacity: 0; transform: translateY(8px); }
       to { opacity: 1; transform: none; }
     }
-    @keyframes targetPulse {
-      0%, 100% { box-shadow: 0 0 0 0 rgba(26, 26, 26, 0.18); transform: scale(1); }
-      50% { box-shadow: 0 0 0 7px rgba(26, 26, 26, 0); transform: scale(1.03); }
+    @keyframes capA {
+      0%, 30% { opacity: 1; }
+      38%, 100% { opacity: 0; }
     }
-    @keyframes youPop {
-      from { opacity: 0; transform: translateY(8px) scale(0.7); }
-      to { opacity: 1; transform: none; }
+    @keyframes capB {
+      0%, 34% { opacity: 0; }
+      42%, 92% { opacity: 1; }
+      100% { opacity: 0; }
     }
-    @keyframes youBob {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-3px); }
+    @keyframes cursorTravel {
+      0% { opacity: 0; left: 20%; top: 70%; transform: scale(1); }
+      6% { opacity: 1; left: 20%; top: 70%; transform: scale(1); }
+      20% { left: 76%; top: 12%; transform: scale(1); }
+      23% { left: 76%; top: 12%; transform: scale(0.86); }
+      26% { left: 76%; top: 12%; transform: scale(1); }
+      38% { left: 24%; top: 50%; transform: scale(1); }
+      42% { left: 24%; top: 50%; transform: scale(0.9); }
+      45% { left: 24%; top: 50%; transform: scale(1); }
+      62% { left: 44%; top: 64%; transform: scale(1); }
+      66% { left: 44%; top: 64%; transform: scale(0.86); }
+      70% { left: 44%; top: 64%; transform: scale(1); }
+      90% { opacity: 1; left: 44%; top: 64%; transform: scale(1); }
+      100% { opacity: 0; left: 44%; top: 64%; transform: scale(1); }
+    }
+    @keyframes loginPress {
+      0%, 20% { transform: scale(1); }
+      23% { transform: scale(0.96); }
+      27%, 100% { transform: scale(1); }
+    }
+    @keyframes ringLife {
+      0%, 16% { opacity: 0; }
+      20%, 30% { opacity: 1; }
+      38%, 100% { opacity: 0; }
+    }
+    @keyframes youLogin {
+      0%, 18% { opacity: 0; transform: translateY(6px) scale(0.85); }
+      24% { opacity: 1; transform: translateY(-2px) scale(1.04); }
+      28% { opacity: 1; transform: none; }
+      36%, 100% { opacity: 0; transform: none; }
+    }
+    @keyframes youPaste {
+      0%, 40% { opacity: 0; transform: translateY(6px) scale(0.85); }
+      46% { opacity: 1; transform: translateY(-2px) scale(1.04); }
+      50%, 62% { opacity: 1; transform: none; }
+      70%, 100% { opacity: 0; }
+    }
+    @keyframes modalIn {
+      0%, 24% { opacity: 0; }
+      32%, 90% { opacity: 1; }
+      100% { opacity: 0; }
+    }
+    @keyframes modalCard {
+      0%, 24% { transform: translateY(10px) scale(0.96); }
+      32%, 90% { transform: none; }
+      100% { transform: translateY(6px) scale(0.98); }
+    }
+    @keyframes inputFocus {
+      0%, 40% { border-color: #d1d5db; }
+      44%, 68% { border-color: #163326; }
+      78%, 100% { border-color: #d1d5db; }
+    }
+    @keyframes typeCode {
+      0%, 44% { max-width: 0; }
+      60%, 100% { max-width: 12ch; }
+    }
+    @keyframes caretBlink {
+      0%, 44% { opacity: 0; }
+      46%, 48% { opacity: 1; }
+      50%, 52% { opacity: 0; }
+      54%, 56% { opacity: 1; }
+      58%, 60% { opacity: 0; }
+      62%, 100% { opacity: 0; }
+    }
+    @keyframes submitPress {
+      0%, 64% { filter: brightness(1); transform: scale(1); }
+      67% { filter: brightness(1.12); transform: scale(0.98); }
+      72%, 100% { filter: brightness(1); transform: scale(1); }
+    }
+
+    @media (max-width: 480px) {
+      .scene { padding: 14px 12px 12px; }
+      .page-header { padding: 11px 12px; }
+      .login { font-size: 9px; padding: 5px 9px; }
+      .ghost { padding: 22px 14px 26px; }
+    }
+
+    .hint.freeze-login .login,
+    .hint.freeze-login .ring,
+    .hint.freeze-login .cursor,
+    .hint.freeze-login .you-login,
+    .hint.freeze-login .you-paste,
+    .hint.freeze-login .modal-layer,
+    .hint.freeze-login .modal,
+    .hint.freeze-login .digits,
+    .hint.freeze-login .blink,
+    .hint.freeze-login .modal-input,
+    .hint.freeze-login .modal-submit,
+    .hint.freeze-login .cap-a,
+    .hint.freeze-login .cap-b {
+      animation-delay: -2.6s !important;
+      animation-play-state: paused !important;
+    }
+    .hint.freeze-paste .login,
+    .hint.freeze-paste .ring,
+    .hint.freeze-paste .cursor,
+    .hint.freeze-paste .you-login,
+    .hint.freeze-paste .you-paste,
+    .hint.freeze-paste .modal-layer,
+    .hint.freeze-paste .modal,
+    .hint.freeze-paste .digits,
+    .hint.freeze-paste .blink,
+    .hint.freeze-paste .modal-input,
+    .hint.freeze-paste .modal-submit,
+    .hint.freeze-paste .cap-a,
+    .hint.freeze-paste .cap-b {
+      animation-delay: -6s !important;
+      animation-play-state: paused !important;
     }
 
     @media (prefers-reduced-motion: reduce) {
-      .hint.is-on, .login, .you, .you-label { animation: none; }
-      .hint.is-on, .you { opacity: 1; transform: none; }
+      .hint.is-on, .login, .ring, .cursor, .you-login, .you-paste,
+      .modal-layer, .modal, .digits, .blink, .modal-input, .modal-submit,
+      .cap-a, .cap-b { animation: none; }
+      .hint.is-on, .cursor, .you-paste, .modal-layer, .cap-b { opacity: 1; }
+      .cap-a { opacity: 0; }
+      .ring, .you-login { opacity: 0; }
+      .modal { transform: none; }
+      .digits { max-width: 12ch; }
     }
   </style>
 </head>
@@ -318,7 +450,7 @@
     <div class="hint" id="hint">
       <div class="scene" aria-hidden="true">
         <div class="browser">
-          <div class="chrome"><i></i><i></i><i></i></div>
+          <div class="chrome"><i></i><i></i><i></i><span class="chrome-url"></span></div>
           <div class="page">
             <div class="page-header">
               <div class="page-brand">
@@ -326,16 +458,17 @@
                 <span class="page-brand-text">stube<span class="dot">.</span></span>
               </div>
               <div class="target">
+                <span class="ring"></span>
                 <div class="login">
-                  <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M2.586 17.414A2 2 0 0 0 2 18.828V21a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h1a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h.172a2 2 0 0 0 1.414-.586l.814-.814a6.5 6.5 0 1 0-4-4z" />
                     <circle cx="16.5" cy="7.5" r=".5" fill="currentColor" />
                   </svg>
                   Login mit Passwort
                 </div>
-                <div class="you">
+                <div class="you-login">
                   <span class="you-caret"></span>
-                  <span class="you-label">You</span>
+                  <span class="you-chip">You</span>
                 </div>
               </div>
             </div>
@@ -343,6 +476,7 @@
               <div class="ghost-card">
                 <div class="ghost-kicker"></div>
                 <div class="ghost-title"></div>
+                <div class="ghost-title short"></div>
                 <div class="ghost-line"></div>
                 <div class="ghost-line short"></div>
                 <div class="ghost-row">
@@ -351,17 +485,45 @@
                 </div>
               </div>
             </div>
+
+            <div class="modal-layer">
+              <div class="modal">
+                <svg class="modal-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg>
+                <span class="modal-kicker">Interner Zugang</span>
+                <p class="modal-title">Seite öffnen</p>
+                <p class="modal-lead">Gib den Zugangscode ein, um die interne Vorschau zu sehen.</p>
+                <span class="modal-label">Zugangscode</span>
+                <div class="modal-input">
+                  <span class="digits">02111965</span>
+                  <span class="blink"></span>
+                </div>
+                <div class="modal-submit">Vorschau öffnen</div>
+                <div class="you-paste">
+                  <span class="you-caret"></span>
+                  <span class="you-chip">Paste</span>
+                </div>
+              </div>
+            </div>
+
+            <svg class="cursor" viewBox="0 0 24 24" width="20" height="20">
+              <path d="M4.037 4.688a.495.495 0 0 1 .651-.651l16 6.5a.5.5 0 0 1-.063.947l-6.124 1.58a2 2 0 0 0-1.438 1.435l-1.579 6.126a.5.5 0 0 1-.947.063z" fill="#fff" stroke="#18181b" stroke-width="1.5" stroke-linejoin="round" />
+            </svg>
           </div>
         </div>
       </div>
-      <p class="hint-caption">Oben rechts auf stube.li: <span>Login mit Passwort</span></p>
+      <p class="hint-caption">
+        <span class="cap cap-a">Oben rechts: <em>Login mit Passwort</em></span>
+        <span class="cap cap-b">Code einfügen, dann <em>Vorschau öffnen</em></span>
+      </p>
     </div>
   </main>
   <script>
     const CODE = "02111965";
     const DEST = "https://www.stube.li/";
-    const DELAY = 7;
-    const preview = new URLSearchParams(location.search).has("preview");
+    const DELAY = 12;
+    const params = new URLSearchParams(location.search);
+    const preview = params.has("preview");
+    const freeze = params.get("freeze");
     const copyBtn = document.getElementById("copy");
     const statusEl = document.getElementById("status");
     const hintEl = document.getElementById("hint");
@@ -426,9 +588,13 @@
       startCountdown();
     });
 
-    if (preview) {
+    if (preview || freeze) {
       showHint();
-      statusEl.textContent = "Vorschau der Animation — kein Redirect.";
+      if (freeze === "paste") hintEl.classList.add("freeze-paste");
+      if (freeze === "login") hintEl.classList.add("freeze-login");
+      statusEl.textContent = freeze
+        ? "Vorschau (pausiert)."
+        : "Vorschau der Animation — kein Redirect.";
     }
   </script>
 </body>
