@@ -311,10 +311,10 @@
 
     .cursor {
       position: absolute; z-index: 12;
+      left: 0; top: 0;
       width: 20px; height: 20px; pointer-events: none;
       filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.28));
       transform-origin: 16% 16%; opacity: 0;
-      animation: cursorTravel var(--loop) ease infinite;
     }
 
     @keyframes riseIn {
@@ -330,21 +330,7 @@
       42%, 92% { opacity: 1; }
       100% { opacity: 0; }
     }
-    @keyframes cursorTravel {
-      0% { opacity: 0; left: 20%; top: 70%; transform: scale(1); }
-      6% { opacity: 1; left: 20%; top: 70%; transform: scale(1); }
-      20% { left: 76%; top: 12%; transform: scale(1); }
-      23% { left: 76%; top: 12%; transform: scale(0.86); }
-      26% { left: 76%; top: 12%; transform: scale(1); }
-      38% { left: 24%; top: 50%; transform: scale(1); }
-      42% { left: 24%; top: 50%; transform: scale(0.9); }
-      45% { left: 24%; top: 50%; transform: scale(1); }
-      62% { left: 44%; top: 64%; transform: scale(1); }
-      66% { left: 44%; top: 64%; transform: scale(0.86); }
-      70% { left: 44%; top: 64%; transform: scale(1); }
-      90% { opacity: 1; left: 44%; top: 64%; transform: scale(1); }
-      100% { opacity: 0; left: 44%; top: 64%; transform: scale(1); }
-    }
+
     @keyframes loginPress {
       0%, 20% { transform: scale(1); }
       23% { transform: scale(0.96); }
@@ -441,10 +427,11 @@
     }
 
     @media (prefers-reduced-motion: reduce) {
-      .hint.is-on, .login, .ring, .cursor, .you-login, .you-paste,
+      .hint.is-on, .login, .ring, .you-login, .you-paste,
       .modal-layer, .modal, .digits, .blink, .modal-input, .modal-submit,
       .cap-a, .cap-b { animation: none; }
-      .hint.is-on, .cursor, .you-paste, .modal-layer, .cap-b { opacity: 1; }
+      .hint.is-on, .you-paste, .modal-layer, .cap-b { opacity: 1; }
+      .cursor { opacity: 0; }
       .cap-a { opacity: 0; }
       .ring, .you-login { opacity: 0; }
       .modal { transform: none; }
@@ -544,7 +531,107 @@
     const goBtn = document.getElementById("go");
     const statusEl = document.getElementById("status");
     const hintEl = document.getElementById("hint");
+    const cursorEl = document.querySelector(".cursor");
+    const pageEl = document.querySelector(".page");
     let copied = false;
+    let cursorLoop = 0;
+
+    function sleep(ms) {
+      return new Promise((resolve) => setTimeout(resolve, ms));
+    }
+
+    function tipOn(el, fx, fy) {
+      const page = pageEl.getBoundingClientRect();
+      const box = el.getBoundingClientRect();
+      return {
+        x: box.left - page.left + box.width * fx - 3,
+        y: box.top - page.top + box.height * fy - 3,
+      };
+    }
+
+    function placeCursor(x, y, ms, scale, opacity) {
+      cursorEl.style.transition = ms
+        ? "left " + ms + "ms cubic-bezier(0.22, 1, 0.36, 1), top " + ms + "ms cubic-bezier(0.22, 1, 0.36, 1), transform 120ms ease, opacity 180ms ease"
+        : "none";
+      cursorEl.style.left = x + "px";
+      cursorEl.style.top = y + "px";
+      cursorEl.style.transform = "scale(" + (scale == null ? 1 : scale) + ")";
+      if (opacity != null) cursorEl.style.opacity = String(opacity);
+    }
+
+    async function playCursor(token) {
+      const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      if (reduce) {
+        cursorEl.style.opacity = "0";
+        return;
+      }
+      const t0 = performance.now();
+      const at = async (ms) => {
+        const wait = ms - (performance.now() - t0);
+        if (wait > 0) await sleep(wait);
+      };
+      const login = document.querySelector(".login");
+      const input = document.querySelector(".modal-input");
+      const submit = document.querySelector(".modal-submit");
+      const ghost = document.querySelector(".ghost-card");
+      if (!login || !input || !submit || !ghost) return;
+
+      const start = tipOn(ghost, 0.4, 0.7);
+      placeCursor(start.x, start.y, 0, 1, 0);
+      await at(200);
+      if (token !== cursorLoop) return;
+      placeCursor(start.x, start.y, 220, 1, 1);
+
+      await at(700);
+      if (token !== cursorLoop) return;
+      const onLogin = tipOn(login, 0.62, 0.58);
+      placeCursor(onLogin.x, onLogin.y, 1400, 1, 1);
+
+      await at(2400);
+      if (token !== cursorLoop) return;
+      placeCursor(onLogin.x, onLogin.y, 120, 0.86, 1);
+      await at(2580);
+      if (token !== cursorLoop) return;
+      placeCursor(onLogin.x, onLogin.y, 120, 1, 1);
+
+      await at(3900);
+      if (token !== cursorLoop) return;
+      const onInput = tipOn(input, 0.2, 0.55);
+      placeCursor(onInput.x, onInput.y, 700, 1, 1);
+
+      await at(4800);
+      if (token !== cursorLoop) return;
+      placeCursor(onInput.x, onInput.y, 120, 0.88, 1);
+      await at(4980);
+      if (token !== cursorLoop) return;
+      placeCursor(onInput.x, onInput.y, 120, 1, 1);
+
+      await at(7500);
+      if (token !== cursorLoop) return;
+      const onSubmit = tipOn(submit, 0.55, 0.5);
+      placeCursor(onSubmit.x, onSubmit.y, 650, 1, 1);
+
+      await at(8400);
+      if (token !== cursorLoop) return;
+      placeCursor(onSubmit.x, onSubmit.y, 120, 0.86, 1);
+      await at(8580);
+      if (token !== cursorLoop) return;
+      placeCursor(onSubmit.x, onSubmit.y, 120, 1, 1);
+
+      await at(11400);
+      if (token !== cursorLoop) return;
+      placeCursor(onSubmit.x, onSubmit.y, 280, 1, 0);
+      await at(12000);
+    }
+
+    function startCursorLoop() {
+      const token = ++cursorLoop;
+      (async () => {
+        while (token === cursorLoop) {
+          await playCursor(token);
+        }
+      })();
+    }
 
     async function copyCode() {
       try {
@@ -580,10 +667,12 @@
       copyBtn.classList.add("is-done");
       statusEl.textContent = "Code ist in der Zwischenablage. Als Nächstes auf stube.li einfügen.";
       hintEl.classList.add("is-on");
+      requestAnimationFrame(() => startCursorLoop());
     });
 
     goBtn.addEventListener("click", async () => {
       if (!copied) return;
+      cursorLoop += 1;
       await copyCode();
       window.location.href = DEST;
     });
