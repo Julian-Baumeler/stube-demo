@@ -205,6 +205,8 @@ button {
   display: flex;
   align-items: center;
   gap: 6px;
+  text-decoration: none;
+  color: inherit;
 }
 
 .navbar-powered-label {
