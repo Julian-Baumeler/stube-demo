@@ -27,7 +27,7 @@
     }
     .card {
       width: 100%;
-      max-width: 480px;
+      max-width: 560px;
       background: #fff;
       border: 1px solid rgba(0, 0, 0, 0.1);
       border-radius: 12px;
@@ -101,7 +101,7 @@
 
     .hint {
       display: none;
-      margin-top: 22px;
+      margin-top: 20px;
     }
     .hint.is-on {
       display: block;
@@ -116,115 +116,188 @@
     }
     .hint-caption span { color: #2d5f4f; }
 
-    .mock {
-      position: relative;
-      border: 1px solid rgba(0, 0, 0, 0.1);
-      border-radius: 10px;
-      overflow: visible;
-      background: #fff;
+    .scene {
+      background: linear-gradient(165deg, #8fb3ce 0%, #c9b8ae 48%, #edcbb8 100%);
+      border-radius: 14px;
+      padding: 22px 18px 16px;
     }
-    .mock-header {
+    .browser {
+      background: #f4f4f5;
+      border-radius: 12px;
+      box-shadow: 0 18px 40px rgba(20, 30, 40, 0.18);
+      overflow: visible;
+    }
+    .chrome {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 10px 14px 8px;
+    }
+    .chrome i {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #d4d4d8;
+      display: block;
+    }
+    .chrome i:nth-child(1) { background: #ff5f57; }
+    .chrome i:nth-child(2) { background: #febc2e; }
+    .chrome i:nth-child(3) { background: #28c840; }
+
+    .page {
+      background: #fff;
+      border-radius: 0 0 12px 12px;
+      overflow: visible;
+    }
+    .page-header {
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 12px;
-      padding: 14px 16px;
-      border-bottom: 1px solid #e5e7eb;
+      padding: 12px 16px 44px;
+      border-bottom: 1px solid #ececee;
     }
-    .mock-brand {
+    .page-brand {
       display: flex;
       align-items: center;
       gap: 8px;
-      min-width: 0;
     }
-    .mock-brand img { height: 24px; width: auto; display: block; }
-    .mock-brand-text {
-      font-size: 18px;
+    .page-brand img { height: 22px; width: auto; display: block; }
+    .page-brand-text {
+      font-size: 16px;
       font-weight: 700;
       letter-spacing: -0.03em;
       color: #163326;
     }
-    .mock-brand-text .dot { color: #2d5f4f; }
-    .mock-login-wrap {
+    .page-brand-text .dot { color: #2d5f4f; }
+
+    .target {
       position: relative;
       flex-shrink: 0;
+      z-index: 2;
     }
-    .mock-login {
+    .login {
       position: relative;
       z-index: 2;
       display: inline-flex;
       align-items: center;
-      gap: 8px;
-      padding: 6px 8px;
-      border-radius: 6px;
+      gap: 7px;
+      padding: 7px 12px;
+      border-radius: 999px;
+      background: #fff;
+      border: 2.5px solid #1a1a1a;
+      box-shadow: 0 0 0 0 rgba(26, 26, 26, 0.18);
       font-family: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
-      font-size: 11px;
+      font-size: 10px;
       font-weight: 600;
       letter-spacing: 0.08em;
       text-transform: uppercase;
-      color: #4b5563;
+      color: #111;
+      animation: targetPulse 1.6s ease-in-out infinite;
+    }
+    .you {
+      position: absolute;
+      top: calc(100% + 10px);
+      right: 2px;
+      display: flex;
+      align-items: flex-start;
+      gap: 6px;
+      z-index: 3;
+      animation: youPop 0.55s 0.15s cubic-bezier(0.2, 1.2, 0.3, 1) both;
+    }
+    .you-caret {
+      width: 0;
+      height: 0;
+      margin-top: -10px;
+      border-left: 6px solid transparent;
+      border-right: 6px solid transparent;
+      border-bottom: 8px solid #6b7280;
+      filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.08));
+    }
+    .you-label {
+      background: #6b7280;
+      color: #fff;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.01em;
+      padding: 3px 10px 4px;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+      animation: youBob 1.4s 0.7s ease-in-out infinite;
+    }
+
+    .ghost {
+      padding: 22px 20px 20px;
+      display: flex;
+      justify-content: center;
+    }
+    .ghost-card {
+      width: 70%;
+      max-width: 280px;
+      border: 1px solid #ececee;
+      border-radius: 10px;
+      padding: 16px;
       background: #fff;
     }
-    .pulse {
-      position: absolute;
-      inset: -7px;
-      border-radius: 10px;
-      border: 2px solid #2d5f4f;
-      z-index: 1;
-      animation: pulseRing 1.5s ease-out infinite;
+    .ghost-kicker {
+      width: 42%;
+      height: 6px;
+      border-radius: 99px;
+      background: #e8e8ea;
+      margin-bottom: 12px;
     }
-    .arrow {
-      position: absolute;
-      right: 10px;
-      top: calc(100% + 2px);
-      width: 86px;
-      height: 72px;
-      pointer-events: none;
-      z-index: 3;
-      animation: bounceArrow 0.9s ease-in-out infinite;
+    .ghost-title {
+      width: 78%;
+      height: 10px;
+      border-radius: 99px;
+      background: #e4e4e7;
+      margin-bottom: 8px;
     }
-    .cursor {
-      position: absolute;
-      right: -6px;
-      top: 22px;
-      width: 22px;
+    .ghost-line {
+      height: 6px;
+      border-radius: 99px;
+      background: #f0f0f2;
+      margin-bottom: 6px;
+    }
+    .ghost-line.short { width: 62%; }
+    .ghost-row {
+      display: flex;
+      gap: 8px;
+      margin-top: 14px;
+    }
+    .ghost-input {
+      flex: 1;
       height: 22px;
-      z-index: 4;
-      pointer-events: none;
-      opacity: 0;
-      animation: cursorIn 1.15s 0.25s ease-out forwards;
+      border-radius: 6px;
+      background: #f4f4f5;
     }
-    .mock-body {
-      height: 96px;
-      background: #fafafa;
-      border-radius: 0 0 10px 10px;
+    .ghost-btn {
+      width: 72px;
+      height: 22px;
+      border-radius: 6px;
+      background: #d7e3dd;
     }
 
     @keyframes riseIn {
       from { opacity: 0; transform: translateY(8px); }
       to { opacity: 1; transform: none; }
     }
-    @keyframes pulseRing {
-      0% { transform: scale(0.92); opacity: 0.7; }
-      70% { transform: scale(1.18); opacity: 0; }
-      100% { transform: scale(1.18); opacity: 0; }
+    @keyframes targetPulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(26, 26, 26, 0.18); transform: scale(1); }
+      50% { box-shadow: 0 0 0 7px rgba(26, 26, 26, 0); transform: scale(1.03); }
     }
-    @keyframes bounceArrow {
-      0%, 100% { transform: translate(0, 0); }
-      50% { transform: translate(5px, -7px); }
+    @keyframes youPop {
+      from { opacity: 0; transform: translateY(8px) scale(0.7); }
+      to { opacity: 1; transform: none; }
     }
-    @keyframes cursorIn {
-      0% { opacity: 0; transform: translate(-48px, 36px); }
-      18% { opacity: 1; }
-      72% { transform: translate(0, 0); }
-      82% { transform: translate(0, 0) scale(0.88); }
-      100% { opacity: 1; transform: translate(0, 0) scale(1); }
+    @keyframes youBob {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-3px); }
     }
 
     @media (prefers-reduced-motion: reduce) {
-      .hint.is-on, .pulse, .arrow, .cursor { animation: none; }
-      .hint.is-on { opacity: 1; }
-      .cursor { opacity: 1; }
+      .hint.is-on, .login, .you, .you-label { animation: none; }
+      .hint.is-on, .you { opacity: 1; transform: none; }
     }
   </style>
 </head>
@@ -243,31 +316,43 @@
     <p class="status" id="status">Zuerst den Code kopieren.</p>
 
     <div class="hint" id="hint">
-      <div class="mock" aria-hidden="true">
-        <div class="mock-header">
-          <div class="mock-brand">
-            <img src="/assets/stube-li-logo.svg" alt="" />
-            <span class="mock-brand-text">stube<span class="dot">.</span></span>
-          </div>
-          <div class="mock-login-wrap">
-            <span class="pulse"></span>
-            <div class="mock-login">
-              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <path d="M2.586 17.414A2 2 0 0 0 2 18.828V21a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h1a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h.172a2 2 0 0 0 1.414-.586l.814-.814a6.5 6.5 0 1 0-4-4z" />
-                <circle cx="16.5" cy="7.5" r=".5" fill="currentColor" />
-              </svg>
-              Login mit Passwort
+      <div class="scene" aria-hidden="true">
+        <div class="browser">
+          <div class="chrome"><i></i><i></i><i></i></div>
+          <div class="page">
+            <div class="page-header">
+              <div class="page-brand">
+                <img src="/assets/stube-li-logo.svg" alt="" />
+                <span class="page-brand-text">stube<span class="dot">.</span></span>
+              </div>
+              <div class="target">
+                <div class="login">
+                  <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M2.586 17.414A2 2 0 0 0 2 18.828V21a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h1a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h.172a2 2 0 0 0 1.414-.586l.814-.814a6.5 6.5 0 1 0-4-4z" />
+                    <circle cx="16.5" cy="7.5" r=".5" fill="currentColor" />
+                  </svg>
+                  Login mit Passwort
+                </div>
+                <div class="you">
+                  <span class="you-caret"></span>
+                  <span class="you-label">You</span>
+                </div>
+              </div>
             </div>
-            <svg class="cursor" viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M4 2.5 19 14.2l-6.1.4 3.4 7.4-2.6 1.2-3.5-7.5L4 19.8Z" fill="#111" stroke="#fff" stroke-width="1.2" stroke-linejoin="round" />
-            </svg>
-            <svg class="arrow" viewBox="0 0 86 72" fill="none" aria-hidden="true">
-              <path d="M16 64c16-1 38-10 54-40" stroke="#2d5f4f" stroke-width="2.5" stroke-linecap="round" />
-              <path d="M54 32l18-10-2-16" stroke="#2d5f4f" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
-            </svg>
+            <div class="ghost">
+              <div class="ghost-card">
+                <div class="ghost-kicker"></div>
+                <div class="ghost-title"></div>
+                <div class="ghost-line"></div>
+                <div class="ghost-line short"></div>
+                <div class="ghost-row">
+                  <div class="ghost-input"></div>
+                  <div class="ghost-btn"></div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-        <div class="mock-body"></div>
       </div>
       <p class="hint-caption">Oben rechts auf stube.li: <span>Login mit Passwort</span></p>
     </div>
@@ -275,7 +360,8 @@
   <script>
     const CODE = "02111965";
     const DEST = "https://www.stube.li/";
-    const DELAY = 6;
+    const DELAY = 7;
+    const preview = new URLSearchParams(location.search).has("preview");
     const copyBtn = document.getElementById("copy");
     const statusEl = document.getElementById("status");
     const hintEl = document.getElementById("hint");
@@ -308,6 +394,12 @@
       window.location.href = DEST;
     }
 
+    function showHint() {
+      copyBtn.textContent = "Kopiert";
+      copyBtn.classList.add("is-done");
+      hintEl.classList.add("is-on");
+    }
+
     function startCountdown() {
       remaining = DELAY;
       statusEl.innerHTML = "Weiter zu stube.li in <span id=\"secs\">" + remaining + "</span>s…";
@@ -330,11 +422,14 @@
         statusEl.textContent = "Kopieren hat nicht geklappt. Bitte nochmals versuchen.";
         return;
       }
-      copyBtn.textContent = "Kopiert";
-      copyBtn.classList.add("is-done");
-      hintEl.classList.add("is-on");
+      showHint();
       startCountdown();
     });
+
+    if (preview) {
+      showHint();
+      statusEl.textContent = "Vorschau der Animation — kein Redirect.";
+    }
   </script>
 </body>
 </html>
