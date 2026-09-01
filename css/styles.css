@@ -185,6 +185,7 @@ button {
   height: 100%;
   text-decoration: none;
   color: inherit;
+  cursor: pointer;
 }
 
 .navbar-logo {

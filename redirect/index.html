@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Zugangscode · stube.li</title>
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" href="/assets/favicon-32x32.png" sizes="32x32" />
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body {
+      min-height: 100dvh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      -webkit-font-smoothing: antialiased;
+      background: #fafafa;
+      color: #000;
+    }
+    .card {
+      width: 100%;
+      max-width: 420px;
+      background: #fff;
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      border-radius: 12px;
+      padding: 32px 28px 28px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.08);
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 28px;
+      text-decoration: none;
+      color: inherit;
+    }
+    .brand img { height: 26px; width: auto; display: block; }
+    .brand span { font-size: 15px; font-weight: 600; letter-spacing: -0.02em; }
+    h1 {
+      margin: 0 0 8px;
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: #163326;
+    }
+    .lead {
+      margin: 0 0 22px;
+      font-size: 14px;
+      line-height: 1.45;
+      color: #666;
+    }
+    .code-box {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 14px 16px;
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+      background: #fafafa;
+      margin-bottom: 14px;
+    }
+    .code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      font-variant-numeric: tabular-nums;
+      color: #163326;
+    }
+    .copy {
+      appearance: none;
+      border: 0;
+      min-height: 40px;
+      padding: 0 16px;
+      border-radius: 8px;
+      background: #2d5f4f;
+      color: #fff;
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .copy:hover { filter: brightness(1.08); }
+    .copy.is-done { background: #163326; }
+    .status {
+      margin: 0;
+      font-size: 13px;
+      color: #666;
+      min-height: 1.3em;
+    }
+    .status a { color: #163326; font-weight: 600; }
+  </style>
+</head>
+<body>
+  <main class="card">
+    <a class="brand" href="/">
+      <img src="/assets/stube-li-logo.png" alt="" />
+      <span>stube.li</span>
+    </a>
+    <h1>Zugangscode</h1>
+    <p class="lead">Kopiere den Code und gib ihn auf stube.li ein, um die interne Vorschau zu öffnen.</p>
+    <div class="code-box">
+      <span class="code" id="code">02111965</span>
+      <button class="copy" type="button" id="copy">Kopieren</button>
+    </div>
+    <p class="status" id="status">Weiter zu stube.li in <span id="secs">4</span>s…</p>
+  </main>
+  <script>
+    const CODE = "02111965";
+    const DEST = "https://www.stube.li/";
+    const copyBtn = document.getElementById("copy");
+    const statusEl = document.getElementById("status");
+    const secsEl = document.getElementById("secs");
+    let remaining = 4;
+    let timer;
+
+    async function copyCode() {
+      try {
+        await navigator.clipboard.writeText(CODE);
+        return true;
+      } catch {
+        try {
+          const field = document.createElement("textarea");
+          field.value = CODE;
+          field.setAttribute("readonly", "");
+          field.style.position = "fixed";
+          field.style.left = "-9999px";
+          document.body.appendChild(field);
+          field.select();
+          const ok = document.execCommand("copy");
+          field.remove();
+          return ok;
+        } catch {
+          return false;
+        }
+      }
+    }
+
+    function go() {
+      window.location.href = DEST;
+    }
+
+    copyBtn.addEventListener("click", async () => {
+      const ok = await copyCode();
+      copyBtn.textContent = ok ? "Kopiert" : "Kopieren";
+      copyBtn.classList.toggle("is-done", ok);
+      if (ok) {
+        clearInterval(timer);
+        statusEl.textContent = "Weiter zu stube.li…";
+        setTimeout(go, 600);
+      }
+    });
+
+    timer = setInterval(() => {
+      remaining -= 1;
+      if (remaining <= 0) {
+        clearInterval(timer);
+        go();
+        return;
+      }
+      secsEl.textContent = String(remaining);
+    }, 1000);
+  </script>
+</body>
+</html>
